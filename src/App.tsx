@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { socketService } from "./services/socketService";
+import { Login } from "./views/Login";
 
 function App() {
   const [isConnected, setIsConnected] = useState<boolean>(false);
@@ -59,17 +60,7 @@ function App() {
 
       <main>
         {!currentUser ? (
-          <div className="login-container">
-            <h2>Join Workspace</h2>
-            <p>Enter your name and choose an avatar to get started</p>
-
-            {/* TODO: Implement login form */}
-            <button
-              onClick={() => handleLogin({ name: "Test User", avatar: "1" })}
-            >
-              Join as Test User
-            </button>
-          </div>
+          <Login />
         ) : (
           <div className="workspace-container">
             {workspace ? (
