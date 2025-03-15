@@ -13,10 +13,3 @@ export const Container = styled.div`
   border-radius: 8px;
   text-align: center;
 `;
-
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  row-gap: 15px;
-  align-items: center;
-`;

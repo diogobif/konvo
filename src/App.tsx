@@ -2,13 +2,29 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { socketService } from "./services/socketService";
 import { Login } from "./views/Login";
+import { useUserActions } from "./stores/User/useUserStore";
+import { UserData } from "./stores/User/types";
+import { useSocketService } from "./hooks/useSocketService";
 
 function App() {
-  const [isConnected, setIsConnected] = useState<boolean>(false);
+  const {
+    handleConnectToServer,
+    handleDisconnect,
+    isConnected,
+    hasJoinedWorkspace,
+  } = useSocketService();
+  //const [isConnected, setIsConnected] = useState<boolean>(false);
   const [workspace, setWorkspace] = useState<any>(null);
-  const [currentUser, setCurrentUser] = useState<any>(null);
+  const { getUserData } = useUserActions();
+  const [currentUser, setCurrentUser] = useState<UserData>(getUserData());
 
   useEffect(() => {
+    console.log(hasJoinedWorkspace);
+  }, [hasJoinedWorkspace]);
+
+  useEffect(() => {
+    handleConnectToServer();
+    /*
     // Connect to the socket server
     socketService.connect();
 
@@ -27,10 +43,11 @@ function App() {
       console.log("Workspace updated:", data);
       setWorkspace(data);
     });
+    */
 
     // Clean up event listeners on component unmount
     return () => {
-      socketService.disconnect();
+      handleDisconnect();
     };
   }, []);
 
@@ -59,7 +76,7 @@ function App() {
       </header>
 
       <main>
-        {!currentUser ? (
+        {!hasJoinedWorkspace ? (
           <Login />
         ) : (
           <div className="workspace-container">
