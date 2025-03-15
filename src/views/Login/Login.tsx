@@ -20,6 +20,7 @@ export function Login() {
       handleJoinWorkspace({ name: data.name, avatar: data.avatarSrc });
     }
   };
+
   return (
     <Container>
       <H2>Join Workspace</H2>

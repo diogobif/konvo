@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import { TextInputMethods } from "../Input/types";
-import { useUserActions } from "../../stores/User/useUserStore";
 import { ALLOWED_AVATAR_FILE_TYPES } from "./constants";
 import { Form } from "./style";
 import { Input } from "../Input";
@@ -16,8 +15,6 @@ export function LoginForm(props: Props) {
   const nameInputRef = useRef<TextInputMethods>(null);
   const avatarInputRef = useRef<TextInputMethods>(null);
   const [currentAvatarUrl, setCurrentAvatarUrl] = useState<string | null>(null);
-
-  const { setUserData } = useUserActions();
 
   const isSubmitButtonDisabled = (): boolean => {
     const currentNameInputValue: string | undefined =

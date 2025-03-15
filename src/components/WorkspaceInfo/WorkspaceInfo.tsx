@@ -14,7 +14,7 @@ export function WorkspaceInfo() {
   return (
     <Container>
       <p>
-        Hello {userName ?? ""} test you have, {taskList.length} tasks,{" "}
+        Hello {userName ?? ""} you have, {taskList.length} tasks,{" "}
         {messagesList.length} messages
       </p>
     </Container>

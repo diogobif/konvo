@@ -21,6 +21,14 @@ const useUser = create<UserState>()((set, get) => ({
         id: data.id ? data.id : state.id,
       }));
     },
+
+    clearUserData: (): void => {
+      set({
+        name: null,
+        avatarSrc: null,
+        id: null,
+      });
+    },
   },
 }));
 
@@ -29,3 +37,6 @@ export const useUserActions = (): UserStateActions =>
 
 export const useUserName = (): string | null =>
   useUser((state: UserState) => state.name);
+
+export const useUserId = (): string | null =>
+  useUser((state: UserState) => state.id);

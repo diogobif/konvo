@@ -12,7 +12,8 @@ export type UserDTO = {
 
 export interface UserStateActions {
   setUserData(data: UserDTO): void;
-  setUserId(id: string): void;
+  setUserId(id: string | null): void;
+  clearUserData(): void;
 }
 
 export interface UserState {
