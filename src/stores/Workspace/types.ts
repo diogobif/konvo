@@ -28,6 +28,7 @@ export type WorkspaceData = {
 
 export interface WorkspaceActions {
   setTasks(taskList: Task[]): void;
+  updateTaskStatus(taskId: string, newStatus: TaskStatusEnum): void;
   getTasks(): Task[];
   setMessages(messageList: Message[]): void;
   getMessages(): Message[];
@@ -37,4 +38,5 @@ export interface WorkspaceState {
   tasks: Task[];
   messages: Message[];
   actions: WorkspaceActions;
+  isRequestInprogress: boolean;
 }

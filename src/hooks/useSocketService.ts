@@ -49,11 +49,17 @@ export function useSocketService() {
     }
   };
 
+  const handleUpdateTaskStatus = (taskId: string, newStatus: string) => {
+    console.log("updated task");
+    socketService.moveTask(taskId, newStatus);
+  };
+
   return {
     isConnected,
     handleDisconnect,
     handleConnectToServer,
     handleJoinWorkspace,
     hasJoinedWorkspace,
+    handleUpdateTaskStatus,
   };
 }
