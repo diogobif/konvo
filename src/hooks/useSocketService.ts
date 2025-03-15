@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useUserActions, useUserId } from "../stores/User/useUserStore";
 import { socketService } from "../services/socketService";
-import { WorkspaceData } from "../stores/Workspace";
+import { UserStatusEnum, WorkspaceData } from "../stores/Workspace";
 import { useWorkspaceActions } from "../stores/Workspace/useWorkspaceStore";
 
 export type JoinWorkspaceData = {
@@ -18,7 +18,7 @@ export function useSocketService() {
 
   useEffect(() => {
     socketService.onConnect(() => {
-      console.log("Connected to server");
+      console.log("onConnect");
       setIsConnected(true);
       if (!!socketService.getSocketId()) {
         setUserId(socketService.getSocketId()!);
@@ -26,7 +26,7 @@ export function useSocketService() {
     });
 
     socketService.onWorkspaceUpdate((data: WorkspaceData) => {
-      console.log("Workspace updated:", data);
+      console.log("onWorkspaceUpdate", data);
       setTasks(data.tasks);
       setMessages(data.messages);
       setUsers(data.users);
@@ -34,7 +34,7 @@ export function useSocketService() {
     });
 
     socketService.onDisconnect(() => {
-      console.log("disconected to server");
+      console.log("onDisconnect");
       setIsConnected(false);
       setHasJoinedWorkspace(false);
       setUserId(null);
@@ -42,26 +42,32 @@ export function useSocketService() {
   }, []);
 
   const handleConnectToServer = () => {
-    console.log("connected");
+    console.log("handleConnectToServer");
     socketService.connect();
   };
 
   const handleJoinWorkspace = (data: JoinWorkspaceData) => {
+    console.log("handleJoinWorkspace");
     if (userId) {
-      console.log("join");
       socketService.joinWorkspace(data);
     }
   };
 
   const handleDisconnect = () => {
+    console.log("handleDisconnect");
     if (isConnected) {
       socketService.disconnect();
     }
   };
 
   const handleUpdateTaskStatus = (taskId: string, newStatus: string) => {
-    console.log("updated task");
+    console.log("handleDisconnect");
     socketService.moveTask(taskId, newStatus);
+  };
+
+  const handleUpdateUserStatus = (newStatus: UserStatusEnum) => {
+    console.log("handleUpdateUserStatus");
+    socketService.updateStatus(newStatus);
   };
 
   return {
@@ -71,5 +77,6 @@ export function useSocketService() {
     handleJoinWorkspace,
     hasJoinedWorkspace,
     handleUpdateTaskStatus,
+    handleUpdateUserStatus,
   };
 }

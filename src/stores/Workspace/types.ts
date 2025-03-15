@@ -25,6 +25,7 @@ export type User = {
   name: string;
   avatar: string;
   status: UserStatusEnum;
+  lastActive: string;
 };
 
 export type Message = {
