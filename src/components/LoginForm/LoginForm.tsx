@@ -23,6 +23,12 @@ export function LoginForm(props: Props) {
     return !currentNameInputValue || !currentAvatarUrl;
   };
 
+  const converFileToBase64 = (file: File): void => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => setCurrentAvatarUrl(reader.result as string);
+  };
+
   const handleFileChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -33,15 +39,14 @@ export function LoginForm(props: Props) {
       setCurrentAvatarUrl(null);
       return;
     }
-
-    setCurrentAvatarUrl(URL.createObjectURL(file));
+    converFileToBase64(file);
   };
 
   const handleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
     props.handleSubmitData({
       name: nameInputRef.current?.getValue()!,
-      avatarSrc: currentAvatarUrl ?? undefined,
+      avatarSrc: currentAvatarUrl!,
     });
   };
 
