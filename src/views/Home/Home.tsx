@@ -5,6 +5,8 @@ import { TaskBoard } from "../../components/TaskBoard";
 import { TaskStatusEnum } from "../../stores/Workspace";
 import { useWorkspaceActions } from "../../stores/Workspace/useWorkspaceStore";
 import { useSocketService } from "../../hooks/useSocketService";
+import { UserList } from "../../components/UsersList/style";
+import { UsersList } from "../../components/UsersList";
 
 export function Home() {
   const { updateTaskStatus } = useWorkspaceActions();
@@ -21,6 +23,7 @@ export function Home() {
   return (
     <Container>
       <WorkspaceInfo />
+      <UsersList />
       <TaskBoard handleUpdateTaskStatus={handleTaskstatusUpdate} />
     </Container>
   );

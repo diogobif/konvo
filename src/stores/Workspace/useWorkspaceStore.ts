@@ -3,6 +3,7 @@ import {
   Message,
   Task,
   TaskStatusEnum,
+  User,
   WorkspaceActions,
   WorkspaceState,
 } from "./types";
@@ -11,6 +12,7 @@ const useWorkspace = create<WorkspaceState>()((set, get) => ({
   isRequestInprogress: false,
   tasks: [],
   messages: [],
+  users: [],
   actions: {
     setTasks: (taskList: Task[]): void => {
       set((state) => ({
@@ -18,10 +20,6 @@ const useWorkspace = create<WorkspaceState>()((set, get) => ({
         tasks: taskList,
       }));
     },
-    getTasks: (): Task[] => {
-      return [];
-    },
-
     updateTaskStatus: (taskId: string, newStatus: TaskStatusEnum): void => {
       const taskList: Task[] = get().tasks;
       set({ isRequestInprogress: true, tasks: [] });
@@ -45,8 +43,12 @@ const useWorkspace = create<WorkspaceState>()((set, get) => ({
         messages: messageList,
       }));
     },
-    getMessages: (): Message[] => {
-      return [];
+
+    setUsers: (userList: User[]): void => {
+      set((state) => ({
+        ...state,
+        users: userList,
+      }));
     },
   },
 }));
@@ -59,6 +61,9 @@ export const useWorkspaceTasks = (): Task[] =>
 
 export const useWorkspaceMessages = (): Message[] =>
   useWorkspace((state) => state.messages);
+
+export const useWorkspaceUsers = (): User[] =>
+  useWorkspace((state) => state.users);
 
 export const useWorkspaceisrequestInProgress = (): boolean =>
   useWorkspace((state: WorkspaceState) => state.isRequestInprogress);

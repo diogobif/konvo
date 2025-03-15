@@ -14,7 +14,7 @@ export function useSocketService() {
   const userId: string | null = useUserId();
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [hasJoinedWorkspace, setHasJoinedWorkspace] = useState<boolean>(false);
-  const { setTasks, setMessages } = useWorkspaceActions();
+  const { setTasks, setMessages, setUsers } = useWorkspaceActions();
 
   useEffect(() => {
     socketService.onConnect(() => {
@@ -29,6 +29,7 @@ export function useSocketService() {
       console.log("Workspace updated:", data);
       setTasks(data.tasks);
       setMessages(data.messages);
+      setUsers(data.users);
       setHasJoinedWorkspace(true);
     });
 

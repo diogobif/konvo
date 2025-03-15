@@ -14,6 +14,19 @@ export type Task = {
   updatedAt: string;
 };
 
+export enum UserStatusEnum {
+  ACTIVE = "active",
+  AWAY = "away",
+  NOT_DISTURB = "do not disturb",
+}
+
+export type User = {
+  id: string;
+  name: string;
+  avatar: string;
+  status: UserStatusEnum;
+};
+
 export type Message = {
   createdAt: string;
   id: string;
@@ -24,19 +37,20 @@ export type Message = {
 export type WorkspaceData = {
   tasks: Task[];
   messages: Message[];
+  users: User[];
 };
 
 export interface WorkspaceActions {
   setTasks(taskList: Task[]): void;
   updateTaskStatus(taskId: string, newStatus: TaskStatusEnum): void;
-  getTasks(): Task[];
   setMessages(messageList: Message[]): void;
-  getMessages(): Message[];
+  setUsers(userList: User[]): void;
 }
 
 export interface WorkspaceState {
   tasks: Task[];
   messages: Message[];
+  users: User[];
   actions: WorkspaceActions;
   isRequestInprogress: boolean;
 }
