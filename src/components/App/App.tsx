@@ -1,13 +1,14 @@
 import React from "react";
 import { useEffect } from "react";
-import { Login } from "./views/Login";
-import { useSocketService } from "./hooks/useSocketService";
-import { Home } from "./views/Home";
-import { Header } from "./components/Header/Header";
-import { useUserName } from "./stores/User/useUserStore";
-import { UserStatusEnum } from "./stores/Workspace";
+import { Login } from "../../views/Login";
+import { useSocketService } from "../../hooks/useSocketService";
+import { Home } from "../../views/Home";
+import { Header } from "../Header/Header";
+import { useUserName } from "../../stores/User/useUserStore";
+import { UserStatusEnum } from "../../stores/Workspace";
+import { Container } from "./style";
 
-function App() {
+export function App() {
   const {
     handleConnectToServer,
     handleDisconnect,
@@ -33,15 +34,13 @@ function App() {
   };
 
   return (
-    <div className="app">
+    <Container>
       <Header
         handleDisconect={handleDisconectFromServer}
         handleUpdateUserStatus={handleUpdateUserstatus}
       />
       {/* THE NAME CHECK IS NEEDED BECAUSE THE SERVER IS RETURN THE JOIN WORKSPACE EVENT RIGHT AFTER CONECTING */}
       <main>{hasJoinedWorkspace && !!userName ? <Home /> : <Login />}</main>
-    </div>
+    </Container>
   );
 }
-
-export default App;
