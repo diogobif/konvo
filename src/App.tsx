@@ -38,6 +38,7 @@ function App() {
         handleDisconect={handleDisconectFromServer}
         handleUpdateUserStatus={handleUpdateUserstatus}
       />
+      {/* THE NAME CHECK IS NEEDED BECAUSE THE SERVER IS RETURN THE JOIN WORKSPACE EVENT RIGHT AFTER CONECTING */}
       <main>{hasJoinedWorkspace && !!userName ? <Home /> : <Login />}</main>
     </div>
   );
