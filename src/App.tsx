@@ -22,7 +22,7 @@ function App() {
       setIsConnected(false);
     });
 
-    socketService.onWorkspaceUpdate((data) => {
+    socketService.onWorkspaceUpdate((data: any) => {
       console.log("Workspace updated:", data);
       setWorkspace(data);
     });
@@ -34,7 +34,7 @@ function App() {
   }, []);
 
   // Handle user login
-  const handleLogin = (userData) => {
+  const handleLogin = (userData: any) => {
     socketService.joinWorkspace(userData);
     setCurrentUser({
       id: socketService.getSocketId(),
