@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { UserData } from "../stores/User/types";
 import { useUserActions } from "../stores/User/useUserStore";
 import { socketService } from "../services/socketService";
+import { WorkspaceData } from "../stores/Workspace";
+import { useWorkspaceActions } from "../stores/Workspace/useWorkspaceStore";
 
 export type JoinWorkspaceData = {
   name: string;
@@ -9,20 +10,25 @@ export type JoinWorkspaceData = {
 };
 
 export function useSocketService() {
-  const { getUserData, setUserData } = useUserActions();
+  const { setUserId } = useUserActions();
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [hasJoinedWorkspace, setHasJoinedWorkspace] = useState<boolean>(false);
+  const { setTasks, setMessages } = useWorkspaceActions();
 
   useEffect(() => {
     socketService.onConnect(() => {
       console.log("Connected to server");
       setIsConnected(true);
-      setUserData({ id: socketService.getSocketId() ?? undefined });
+
+      if (!!socketService.getSocketId()) {
+        setUserId(socketService.getSocketId()!);
+      }
     });
 
-    socketService.onWorkspaceUpdate((data: any) => {
+    socketService.onWorkspaceUpdate((data: WorkspaceData) => {
       console.log("Workspace updated:", data);
-      console.log(data);
+      setTasks(data.tasks);
+      setMessages(data.messages);
       setHasJoinedWorkspace(true);
     });
   }, []);

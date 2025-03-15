@@ -1,11 +1,18 @@
 import { create } from "zustand";
 import { UserState, UserData, UserStateActions, UserDTO } from "./types";
 
-const useUserStore = create<UserState>()((set, get) => ({
+const useUser = create<UserState>()((set, get) => ({
   name: null,
   avatarSrc: null,
   id: null,
   actions: {
+    setUserId: (id: string): void => {
+      set((state) => ({
+        ...state,
+        id: id,
+      }));
+    },
+
     setUserData: (data: UserDTO): void => {
       set((state) => ({
         ...state,
@@ -14,16 +21,11 @@ const useUserStore = create<UserState>()((set, get) => ({
         id: data.id ? data.id : state.id,
       }));
     },
-
-    getUserData: (): UserData => {
-      return {
-        avatarSrc: get().avatarSrc,
-        name: get().name,
-        id: get().id,
-      };
-    },
   },
 }));
 
 export const useUserActions = (): UserStateActions =>
-  useUserStore((state: UserState) => state.actions);
+  useUser((state: UserState) => state.actions);
+
+export const useUserName = (): string | null =>
+  useUser((state: UserState) => state.name);

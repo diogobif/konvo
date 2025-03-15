@@ -5,6 +5,7 @@ import { Login } from "./views/Login";
 import { useUserActions } from "./stores/User/useUserStore";
 import { UserData } from "./stores/User/types";
 import { useSocketService } from "./hooks/useSocketService";
+import { Home } from "./views/Home";
 
 function App() {
   const {
@@ -13,10 +14,6 @@ function App() {
     isConnected,
     hasJoinedWorkspace,
   } = useSocketService();
-  //const [isConnected, setIsConnected] = useState<boolean>(false);
-  const [workspace, setWorkspace] = useState<any>(null);
-  const { getUserData } = useUserActions();
-  const [currentUser, setCurrentUser] = useState<UserData>(getUserData());
 
   useEffect(() => {
     console.log(hasJoinedWorkspace);
@@ -51,15 +48,6 @@ function App() {
     };
   }, []);
 
-  // Handle user login
-  const handleLogin = (userData: any) => {
-    socketService.joinWorkspace(userData);
-    setCurrentUser({
-      id: socketService.getSocketId(),
-      ...userData,
-    });
-  };
-
   // For now, just render some basic UI to show connection status
   // You will replace this with your component structure
   return (
@@ -75,26 +63,7 @@ function App() {
         </div>
       </header>
 
-      <main>
-        {!hasJoinedWorkspace ? (
-          <Login />
-        ) : (
-          <div className="workspace-container">
-            {workspace ? (
-              <div>
-                <p>Welcome, {currentUser.name}!</p>
-                <p>There are {workspace.users.length} users online.</p>
-                <p>Tasks: {workspace.tasks.length}</p>
-                <p>Messages: {workspace.messages.length}</p>
-
-                {/* TODO: Implement workspace components */}
-              </div>
-            ) : (
-              <p>Loading workspace data...</p>
-            )}
-          </div>
-        )}
-      </main>
+      <main>{!hasJoinedWorkspace ? <Login /> : <Home />}</main>
     </div>
   );
 }

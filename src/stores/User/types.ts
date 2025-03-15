@@ -12,7 +12,7 @@ export type UserDTO = {
 
 export interface UserStateActions {
   setUserData(data: UserDTO): void;
-  getUserData(): UserData;
+  setUserId(id: string): void;
 }
 
 export interface UserState {
