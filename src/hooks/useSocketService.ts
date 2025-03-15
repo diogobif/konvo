@@ -18,7 +18,6 @@ export function useSocketService() {
 
   useEffect(() => {
     socketService.onConnect(() => {
-      console.log("onConnect");
       setIsConnected(true);
       if (!!socketService.getSocketId()) {
         setUserId(socketService.getSocketId()!);
@@ -26,7 +25,6 @@ export function useSocketService() {
     });
 
     socketService.onWorkspaceUpdate((data: WorkspaceData) => {
-      console.log("onWorkspaceUpdate", data);
       setTasks(data.tasks);
       setMessages(data.messages);
       setUsers(data.users);
@@ -34,7 +32,6 @@ export function useSocketService() {
     });
 
     socketService.onDisconnect(() => {
-      console.log("onDisconnect");
       setIsConnected(false);
       setHasJoinedWorkspace(false);
       setUserId(null);
@@ -42,31 +39,26 @@ export function useSocketService() {
   }, []);
 
   const handleConnectToServer = () => {
-    console.log("handleConnectToServer");
     socketService.connect();
   };
 
   const handleJoinWorkspace = (data: JoinWorkspaceData) => {
-    console.log("handleJoinWorkspace");
     if (userId) {
       socketService.joinWorkspace(data);
     }
   };
 
   const handleDisconnect = () => {
-    console.log("handleDisconnect");
     if (isConnected) {
       socketService.disconnect();
     }
   };
 
   const handleUpdateTaskStatus = (taskId: string, newStatus: string) => {
-    console.log("handleDisconnect");
     socketService.moveTask(taskId, newStatus);
   };
 
   const handleUpdateUserStatus = (newStatus: UserStatusEnum) => {
-    console.log("handleUpdateUserStatus");
     socketService.updateStatus(newStatus);
   };
 
