@@ -1,9 +1,6 @@
 import React from "react";
 import { Task, TaskStatusEnum } from "../../stores/Workspace";
-import {
-  useWorkspaceisrequestInProgress,
-  useWorkspaceTasks,
-} from "../../stores/Workspace/useWorkspaceStore";
+import { useWorkspaceTasks } from "../../stores/Workspace/useWorkspaceStore";
 import { ColumnsWrapper, Container } from "./style";
 import { TaskBoardColumn } from "./TaskBoardColumn";
 import { DndProvider } from "react-dnd";
@@ -16,16 +13,10 @@ type Props = {
 
 export function TaskBoard(props: Props) {
   const taskList: Task[] = useWorkspaceTasks();
-  const isWorkspaceRequestInProgress: boolean =
-    useWorkspaceisrequestInProgress();
 
   const handleTaskDrop = (task: Task, newStatus: TaskStatusEnum) => {
     props.handleUpdateTaskStatus(task.id, newStatus);
   };
-
-  if (isWorkspaceRequestInProgress) {
-    return <p>Loading tasks...</p>;
-  }
 
   return (
     <DndProvider backend={HTML5Backend}>

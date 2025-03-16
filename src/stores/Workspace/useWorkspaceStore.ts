@@ -22,7 +22,6 @@ const useWorkspace = create<WorkspaceState>()((set, get) => ({
     },
     updateTaskStatus: (taskId: string, newStatus: TaskStatusEnum): void => {
       const taskList: Task[] = get().tasks;
-      set({ isRequestInprogress: true, tasks: [] });
       const tasktoUpdate: Task | undefined = taskList.find(
         (task) => task.id === taskId
       );
@@ -34,7 +33,6 @@ const useWorkspace = create<WorkspaceState>()((set, get) => ({
         newTaskList.push({ ...tasktoUpdate, status: newStatus });
         set({ tasks: newTaskList });
       }
-      set({ isRequestInprogress: false });
     },
 
     setMessages: (messageList: Message[]): void => {
@@ -64,6 +62,3 @@ export const useWorkspaceMessages = (): Message[] =>
 
 export const useWorkspaceUsers = (): User[] =>
   useWorkspace((state) => state.users);
-
-export const useWorkspaceisrequestInProgress = (): boolean =>
-  useWorkspace((state: WorkspaceState) => state.isRequestInprogress);

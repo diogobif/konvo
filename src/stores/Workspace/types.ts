@@ -53,5 +53,4 @@ export interface WorkspaceState {
   messages: Message[];
   users: User[];
   actions: WorkspaceActions;
-  isRequestInprogress: boolean;
 }
