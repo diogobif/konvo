@@ -31,3 +31,7 @@
 ## HOW TO RUN
 
 ### same way.
+
+### Notes
+
+#### I was planning to do the chat too, but as the test was made to be built in 4 hours and as I did it using typescript and styled components (which takes more time) I didn´t made the chat and didn´t focused on layout things.
