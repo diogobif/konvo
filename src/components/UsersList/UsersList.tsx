@@ -13,7 +13,7 @@ export function UsersList() {
       <H2>Users Online</H2>
       <UserList>
         {usersList.map((user: User) => (
-          <UserCard user={user} />
+          <UserCard user={user} key={user.id} />
         ))}
       </UserList>
     </Container>

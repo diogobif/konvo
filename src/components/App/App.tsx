@@ -29,7 +29,6 @@ export function App() {
   };
 
   const handleUpdateUserstatus = (newStatus: UserStatusEnum) => {
-    console.log(newStatus);
     handleUpdateUserStatus(newStatus);
   };
 
