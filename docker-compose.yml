@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: ./apps/server
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./apps/server:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+
+  client:
+    build:
+      context: ./apps/client
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./apps/client:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - server
+    restart: unless-stopped
